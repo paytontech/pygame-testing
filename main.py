@@ -28,7 +28,10 @@ pygame.font.init() # you have to call this at the start,
                    # if you want to use this module.
 font = pygame.font.SysFont('arial', 24)
 accelMultiplier = 0.001
-
+accelStopYUp = False
+accelStopYDown = False
+accelStopXLeft = False
+accelStopXRight = False
 while running:
     accelText = "Acceleration: " + str(acceleration)
     keys = pygame.key.get_pressed()
@@ -37,10 +40,52 @@ while running:
     # Did the user click the window close button?
     for event in pygame.event.get():
         if event.type == KEYUP:
-            acceleration = 0
+            if keys[K_UP]:
+                accelStopYUp = True
+            elif keys[K_DOWN]:
+                accelStopYDown = True
+            elif keys[K_LEFT]:
+                accelStopXLeft = True
+            elif keys[K_RIGHT]:
+                accelStopXRight = True
         if event.type == pygame.QUIT:
             running = False
-
+    if accelStopYUp:
+        print("Acceleration: " + str(acceleration))
+        if acceleration > 0:
+            acceleration -= accelMultiplier
+            circleY -= 0.5 * acceleration
+        elif acceleration < 0:
+            accelStopYUp = False
+    else:
+        print("done with accelStopYUp")
+    if accelStopYDown:
+        print("Acceleration: " + str(acceleration))
+        if acceleration > 0:
+            acceleration -= accelMultiplier
+            circleY += 0.5 * acceleration
+        elif acceleration < 0:
+            accelStopYDown = False
+    else:
+        print("done with accelStopYUp")
+    if accelStopXLeft:
+        print("Acceleration: " + str(acceleration))
+        if acceleration > 0:
+            acceleration -= accelMultiplier
+            circleX -= 0.5 * acceleration
+        elif acceleration < 0:
+            accelStopXLeft = False
+    else:
+        print("done with accelStopYUp")
+    if accelStopXRight:
+        print("Acceleration: " + str(acceleration))
+        if acceleration > 0:
+            acceleration -= accelMultiplier
+            circleX += 0.5 * acceleration
+        elif acceleration < 0:
+            accelStopXRight = False
+    else:
+        print("done with accelStopYUp")
     if keys[K_UP]:
                 
                 acceleration += accelMultiplier
