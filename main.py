@@ -1,4 +1,5 @@
 import pygame
+import pygame.freetype
 
 from pygame.locals import  (
     K_UP,
@@ -25,11 +26,14 @@ running = True
 acceleration = 0
 pygame.font.init() # you have to call this at the start, 
                    # if you want to use this module.
-textfont = pygame.font.SysFont('Comic Sans MS', 30)
+font = pygame.font.SysFont('arial', 24)
+accelMultiplier = 0.001
+
 while running:
-    accelText = 'Acceleration: ' + str(acceleration)
-    textfont.render_to(screen, (40, 350), accelText, (0, 0, 0))
+    accelText = "Acceleration: " + str(acceleration)
     keys = pygame.key.get_pressed()
+    img = font.render(accelText, True, (0,0,0))
+    
     # Did the user click the window close button?
     for event in pygame.event.get():
         if event.type == KEYUP:
@@ -39,16 +43,16 @@ while running:
 
     if keys[K_UP]:
                 
-                acceleration += 0.01
+                acceleration += accelMultiplier
                 circleY -= 0.5 * acceleration
     elif keys[K_DOWN]:
-                acceleration += 0.01
+                acceleration += accelMultiplier
                 circleY += 0.5 * acceleration
     elif keys[K_LEFT]:
-                acceleration += 0.01
+                acceleration += accelMultiplier
                 circleX -= 0.5 * acceleration
     elif keys[K_RIGHT]:
-                acceleration += 0.01
+                acceleration += accelMultiplier
                 circleX += 0.5 * acceleration
     if keys == []:
         acceleration = 0
@@ -65,7 +69,7 @@ while running:
 
     # Draw a solid blue circle in the center
     pygame.draw.circle(screen, (0, 0, 255), (circleX, circleY), 75)
-
+    screen.blit(img, [100, 100])
     # Flip the display
     pygame.display.flip()
     
