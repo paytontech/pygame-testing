@@ -42,50 +42,64 @@ while running:
         if event.type == KEYUP:
             if keys[K_UP]:
                 accelStopYUp = True
+                #accelStopYDown = False
+                #accelStopXLeft = False
+                #accelStopXRight = False
             elif keys[K_DOWN]:
                 accelStopYDown = True
+                #accelStopYUp = False
+                #accelStopXLeft = False
+                #accelStopXRight = False
             elif keys[K_LEFT]:
                 accelStopXLeft = True
+                #accelStopXRight = False
+                #accelStopYUp = False
+                #accelStopYDown = False
             elif keys[K_RIGHT]:
                 accelStopXRight = True
+                #accelStopXLeft = False
+                #accelStopYUp = False
+                #accelStopYDown = False
+            else:
+                acceleration -= 0.0000001
         if event.type == pygame.QUIT:
             running = False
     if accelStopYUp:
-        print("Acceleration: " + str(acceleration))
+        print(" yUP: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleY -= 0.5 * acceleration
         elif acceleration < 0:
             accelStopYUp = False
-    else:
-        print("done with accelStopYUp")
+    #else:
+        #print("done with accelStopYUp")
     if accelStopYDown:
-        print("Acceleration: " + str(acceleration))
+        print("yDown: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleY += 0.5 * acceleration
         elif acceleration < 0:
             accelStopYDown = False
-    else:
-        print("done with accelStopYUp")
+    #else:
+        #print("done with accelStopYDown")
     if accelStopXLeft:
-        print("Acceleration: " + str(acceleration))
+        print("xLeft: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleX -= 0.5 * acceleration
         elif acceleration < 0:
             accelStopXLeft = False
-    else:
-        print("done with accelStopYUp")
+    #else:
+        #print("done with accelStopxLeft")
     if accelStopXRight:
-        print("Acceleration: " + str(acceleration))
+        print("xRight: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleX += 0.5 * acceleration
         elif acceleration < 0:
             accelStopXRight = False
-    else:
-        print("done with accelStopYUp")
+    #else:
+        #print("done with accelStopxRight")
     if keys[K_UP]:
                 
                 acceleration += accelMultiplier
@@ -102,13 +116,14 @@ while running:
     if keys == []:
         acceleration = 0
     if circleX > 800:
-        circleX = 0
-    if circleY > 600:
-        circleY = 0
-    if circleX < 0:
         circleX = 800
-    if circleY < 0:
+        accelStopYUp = True
+    if circleY > 600:
         circleY = 600
+    if circleX < 0:
+        circleX = 0
+    if circleY < 0:
+        circleY = 0
     # Fill the background with white
     screen.fill((255, 255, 255))
 
