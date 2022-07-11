@@ -65,7 +65,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     if accelStopYUp:
-        print(" yUP: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleY -= 0.5 * acceleration
@@ -74,7 +73,6 @@ while running:
     #else:
         #print("done with accelStopYUp")
     if accelStopYDown:
-        print("yDown: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleY += 0.5 * acceleration
@@ -83,7 +81,6 @@ while running:
     #else:
         #print("done with accelStopYDown")
     if accelStopXLeft:
-        print("xLeft: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleX -= 0.5 * acceleration
@@ -92,7 +89,6 @@ while running:
     #else:
         #print("done with accelStopxLeft")
     if accelStopXRight:
-        print("xRight: Acceleration: " + str(acceleration))
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleX += 0.5 * acceleration
@@ -115,15 +111,16 @@ while running:
                 circleX += 0.5 * acceleration
     if keys == []:
         acceleration = 0
-    if circleX > 800:
-        circleX = 800
-        accelStopYUp = True
-    if circleY > 600:
-        circleY = 600
-    if circleX < 0:
+    if circleX > 600:
         circleX = 0
-    if circleY < 0:
+        accelStopYUp = True
+    if circleY > 800:
         circleY = 0
+    if circleX < 0:
+        circleX = 600
+    if circleY < 0:
+        circleY = 800
+    print("circle coords: X: {circleX}, YL {circleY}")
     # Fill the background with white
     screen.fill((255, 255, 255))
 
