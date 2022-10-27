@@ -1,5 +1,6 @@
 import pygame
 import pygame.freetype
+from enum import Enum
 
 from pygame.locals import  (
     K_UP,
@@ -16,6 +17,11 @@ from pygame.locals import  (
 
 pygame.init()
 
+class c_axis(Enum):
+    up = 1
+    down = -1
+    left = 2
+    right = -2
 
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption('paytondev')
@@ -28,10 +34,16 @@ pygame.font.init() # you have to call this at the start,
                    # if you want to use this module.
 font = pygame.font.SysFont('arial', 24)
 accelMultiplier = 0.001
-accelStopYUp = False
-accelStopYDown = False
-accelStopXLeft = False
-accelStopXRight = False
+
+def slow(axis):
+    global acceleration
+    global circleX
+    global circleY
+    acceleration-=accelMultiplier
+    match axis:
+        case c_axis.up:
+            circleY -= accelMultiplier * acceleration
+            print("slowing circleY")
 while running:
     accelText = "Acceleration: " + str(acceleration)
     keys = pygame.key.get_pressed()
@@ -41,30 +53,24 @@ while running:
     for event in pygame.event.get():
         if event.type == KEYUP:
             if keys[K_UP]:
-                accelStopYUp = True
-                #accelStopYDown = False
-                #accelStopXLeft = False
-                #accelStopXRight = False
+                slow(c_axis.up)
             elif keys[K_DOWN]:
-                accelStopYDown = True
-                #accelStopYUp = False
-                #accelStopXLeft = False
-                #accelStopXRight = False
+                slow(c_axis.down)
             elif keys[K_LEFT]:
-                accelStopXLeft = True
-                #accelStopXRight = False
-                #accelStopYUp = False
-                #accelStopYDown = False
+                slow(c_axis.left)
             elif keys[K_RIGHT]:
-                accelStopXRight = True
-                #accelStopXLeft = False
-                #accelStopYUp = False
-                #accelStopYDown = False
-            else:
-                acceleration -= 0.0000001
+                slow(c_axis.right)
+            
         if event.type == pygame.QUIT:
             running = False
-    if accelStopYUp:
+    #redoing this
+    """
+    This code (from what i can gather) check if no keys are being held down, and if so, subtracts acceleration my accelMultiplier
+    This is undoubtedly spaghetti code and is largely impossible to read.
+    I'm leaving this code here for anybody who thinks that their code is messy. hopefully this brings some confidence to that person.
+    anyways im redoing this entire thing so yeah
+    """
+    """ if accelStopYUp:
         if acceleration > 0:
             acceleration -= accelMultiplier
             circleY -= 0.5 * acceleration
@@ -95,7 +101,7 @@ while running:
         elif acceleration < 0:
             accelStopXRight = False
     #else:
-        #print("done with accelStopxRight")
+        #print("done with accelStopxRight") """
     if keys[K_UP]:
                 
                 acceleration += accelMultiplier
@@ -120,7 +126,6 @@ while running:
         circleX = 600
     if circleY < 0:
         circleY = 800
-    print("circle coords: X: {circleX}, YL {circleY}")
     # Fill the background with white
     screen.fill((255, 255, 255))
 
@@ -132,3 +137,6 @@ while running:
     
 # Done! Time to quit.
 pygame.quit()
+
+
+
