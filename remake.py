@@ -60,7 +60,7 @@ def checkBounds():
         circleY = 0
     if circleY < 0:
         circleY = 600
-    
+
 
 while running:
     if accelerationX == 0:
@@ -71,7 +71,16 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        
+        if event.type == pygame.MOUSEWHEEL:
+            if event.y > 0 and keys[pygame.K_LCTRL]:
+                accelMultiplier+=accelMultiplier
+            elif event.y > 0:
+                accelMultiplier+=0.001
+            elif event.y < 0 and keys[pygame.K_LCTRL]:
+                accelMultiplier-=accelMultiplier
+            elif event.y < 0:
+                accelMultiplier-=0.001
+    
     if keys[K_UP]:
                 moveUp()
     if keys[K_DOWN]:
@@ -82,8 +91,9 @@ while running:
         moveRight()    
     if keys[K_SPACE]:
         accelerationX = 0   
-        accelerationY = 0   
-    accelText = "X: " + str(accelerationX) + ", Y: " + str(accelerationY)
+        accelerationY = 0  
+        accelMultiplier = 0.001 
+    accelText = "X: " + str(accelerationX) + ", Y: " + str(accelerationY) + ", accelMultiplier: " + str(accelMultiplier)
     #if there are no keys being pressed
     #and if acceleration is not zero
     #subtract acceleration by accelMultiplier
@@ -100,12 +110,13 @@ while running:
             else:
                 accelerationX+=accelMultiplier
 
+
     #movement. if acceleration > 0, circle moves in that direction. if acceleration = 0, circle doesnt move (hopefully)
     circleY-=0.5*accelerationY
     circleX-=0.5*accelerationX
     checkBounds()
 
-
+    
     screen.fill((255, 255, 255))
     img = font.render(accelText, True, (0,0,0))
     pygame.draw.circle(screen, (0, 0, 255), (circleX, circleY), 75)
