@@ -85,14 +85,20 @@ while running:
         accelerationY = 0   
     accelText = "X: " + str(accelerationX) + ", Y: " + str(accelerationY)
     #if there are no keys being pressed
-    #and if acceleration is more than zero
+    #and if acceleration is not zero
     #subtract acceleration by accelMultiplier
     if accelerationY != 0:
         if (keys[K_UP] != True and keys[K_DOWN] != True):
-            accelerationY-=accelMultiplier
+            if accelerationY > 0:
+                accelerationY-=accelMultiplier
+            else:
+                accelerationY+=accelMultiplier
     if accelerationX != 0:
         if (keys[K_LEFT] != True and keys[K_RIGHT] != True):
-            accelerationX-=accelMultiplier
+            if accelerationX > 0:
+                accelerationX-=accelMultiplier
+            else:
+                accelerationX+=accelMultiplier
 
     #movement. if acceleration > 0, circle moves in that direction. if acceleration = 0, circle doesnt move (hopefully)
     circleY-=0.5*accelerationY
