@@ -51,15 +51,15 @@ def moveRight():
     global accelerationX
     accelerationX-=accelMultiplier
 def checkBounds():
-    global circleX, circleY
+    global circleX, circleY, accelerationX, accelerationY
     if circleX > 800:
-        circleX = 0
+        accelerationX+=(accelMultiplier * 10)
     if circleX < 0:
-        circleX = 800
+        accelerationX-=(accelMultiplier * 10)
     if circleY > 600:
-        circleY = 0
+        accelerationY+=(accelMultiplier * 10)
     if circleY < 0:
-        circleY = 600
+        accelerationY-=(accelMultiplier * 10)
 
 
 while running:
