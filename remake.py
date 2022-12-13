@@ -17,6 +17,10 @@ from pygame.locals import  (
     KEYDOWN,
     QUIT,
     KEYUP,
+    K_w,
+    K_a,
+    K_s,
+    K_d
 )
 
 pygame.init()
@@ -82,7 +86,7 @@ while running:
                 accelMultiplier-=0.001
     
     if keys[K_UP]:
-                moveUp()
+        moveUp()
     if keys[K_DOWN]:
         moveDown()
     if keys[K_LEFT]:
@@ -115,7 +119,6 @@ while running:
     circleY-=0.5*accelerationY
     circleX-=0.5*accelerationX
     checkBounds()
-
     
     screen.fill((255, 255, 255))
     img = font.render(accelText, True, (0,0,0))
