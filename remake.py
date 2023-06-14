@@ -1,7 +1,4 @@
 # the original thing was too messy and destroyed for me to even read - redoing it here
-from cProfile import run
-from operator import truediv
-from re import A
 import pygame
 import pygame.freetype
 from enum import Enum
